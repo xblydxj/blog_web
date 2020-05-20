@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:web/pages/main_page.dart';
 
-import 'main.dart';
+import 'app.dart';
 
 typedef PathWidgetBuilder = Widget Function(BuildContext, String);
 
