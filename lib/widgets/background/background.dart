@@ -25,10 +25,6 @@ class Background extends StatelessWidget{
         return GradientDoubleColorBackground();
     }
   }
-
-  Widget paddingBackground(Widget background){
-    return
-  }
 }
 
 

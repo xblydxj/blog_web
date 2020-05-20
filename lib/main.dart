@@ -4,10 +4,10 @@ import 'package:web/config/constants.dart';
 import 'package:web/config/model_binding.dart';
 import 'package:web/pages/main_page.dart';
 import 'package:web/route.dart';
-import 'package:web/widgets/background/background.dart';
 
 import 'config/options.dart';
 import 'config/theme_data.dart';
+import 'pages/base_page.dart';
 
 void main() {
   runApp(BlogApp());
@@ -18,17 +18,16 @@ class BlogApp extends StatelessWidget {
     Key key,
     this.initialRoute,
     this.isTestMode = true,
-}): super(key:key);
+  }) : super(key: key);
 
   final bool isTestMode;
   final String initialRoute;
-
 
   @override
   Widget build(BuildContext context) {
     return ModelBinding(
       initialModel: Options(
-        themeMode:ThemeMode.system,
+        themeMode: ThemeMode.system,
         textScaleFactor: systemTextScaleFactorOption,
         timeDilation: timeDilation,
         isTestMode: isTestMode,
@@ -38,7 +37,9 @@ class BlogApp extends StatelessWidget {
           return MaterialApp(
             title: 'Xblydxj\'Blog',
             debugShowCheckedModeBanner: false,
-            themeMode: Options.of(context).themeMode,
+            themeMode: Options
+                .of(context)
+                .themeMode,
             theme: CThemeData.lightThemeData,
             darkTheme: CThemeData.darkThemeData,
             initialRoute: initialRoute,
@@ -50,7 +51,6 @@ class BlogApp extends StatelessWidget {
   }
 }
 
-
 class RootPage extends StatelessWidget {
   const RootPage({
     Key key,
@@ -58,6 +58,6 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainPage();
+    return BasePage(key: key, child: MainPage());
   }
 }
