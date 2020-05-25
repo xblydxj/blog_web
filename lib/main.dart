@@ -37,8 +37,7 @@ class BlogApp extends StatelessWidget {
           return MaterialApp(
             title: 'Xblydxj\'Blog',
             debugShowCheckedModeBanner: false,
-            themeMode: Options
-                .of(context)
+            themeMode: Options.of(context)
                 .themeMode,
             theme: CThemeData.lightThemeData,
             darkTheme: CThemeData.darkThemeData,

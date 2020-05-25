@@ -1,11 +1,11 @@
-import 'dart:js';
+
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:web/pages/main_page.dart';
 
-import 'app.dart';
+import 'main.dart';
 
 typedef PathWidgetBuilder = Widget Function(BuildContext, String);
 

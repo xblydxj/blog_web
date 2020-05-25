@@ -10,31 +10,34 @@ class BasePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MediaQueryData media = MediaQuery.of(context);
-    return Stack(
-      children: [
-        Background(),
-        Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: media.size.height / 8,
-                horizontal: media.size.width / 10),
-            child: Card(
-              key: key,
-              color: Colors.white.withOpacity(0.4),
-              shadowColor: Colors.white,
-              elevation: 10.0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
+    return Scaffold(
+      body:Stack(
+        children: [
+          Background(),
+          Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: media.size.height / 8,
+                  horizontal: media.size.width / 10),
               child: Card(
                 key: key,
-                color: Colors.white,
-                margin: EdgeInsets.all(8),
+                color: Colors.white.withOpacity(0.4),
                 shadowColor: Colors.white,
+                elevation: 10.0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
-                child: child,
-              ),
-            ))
-      ],
+                child: Card(
+                  key: key,
+                  color: Colors.white,
+                  margin: EdgeInsets.all(8),
+                  shadowColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                  child: child,
+                ),
+              ))
+        ],
+      )
     );
+
   }
 }
