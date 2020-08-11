@@ -17,8 +17,8 @@ class _GradientSingleColorBackgroundState
   void initState() {
     super.initState();
     _controller =
-        AnimationController(duration: Duration(seconds: 10), vsync: this)
-          ..repeat(reverse: true, period: Duration(seconds: 10))
+        AnimationController(duration: Duration(seconds: 3), vsync: this)
+          ..repeat(reverse: true, period: Duration(seconds: 3))
           ..addListener(() {
             setState(() {});
           })
@@ -51,9 +51,9 @@ class _GradientSingleColorBackgroundState
     _controller.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    return Container(color: _animation.value,);
+    return Container(color: _animation.value);
   }
 }

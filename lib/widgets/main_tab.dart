@@ -1069,12 +1069,12 @@ class _MainTabBarState extends State<MainTabBar> {
     for (int index = 0; index < tabCount; index += 1) {
       wrappedTabs[index] = Padding(
         child: InkWell(
-          splashFactory: _InkRippleFactory(() {
-            _handleTap(index);
-          }),
+//          splashFactory: _InkRippleFactory(() {
+//            _handleTap(index);
+//          }),
           splashColor: Colors.tealAccent,
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          onTap: () {},
+          onTap: () { _handleTap(index);},
           child: Stack(
             children: <Widget>[
               wrappedTabs[index],

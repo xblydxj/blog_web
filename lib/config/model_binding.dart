@@ -36,22 +36,21 @@ class _ModelBindingState extends State<ModelBinding> {
     super.dispose();
   }
 
-  void handleTimeDilation(Options newOption){
-      if(currentOption.timeDilation != newOption.timeDilation) {
-        _timerDilationTimer?.cancel();
-        _timerDilationTimer = null;
-        if(newOption.timeDilation > 1){
-          _timerDilationTimer = Timer(const Duration(milliseconds: 150), () {
-            timeDilation = newOption.timeDilation;
-          });
-        }else
+  void handleTimeDilation(Options newOption) {
+    if (currentOption.timeDilation != newOption.timeDilation) {
+      _timerDilationTimer?.cancel();
+      _timerDilationTimer = null;
+      if (newOption.timeDilation > 1) {
+        _timerDilationTimer = Timer(const Duration(milliseconds: 150), () {
           timeDilation = newOption.timeDilation;
-      }
+        });
+      } else
+        timeDilation = newOption.timeDilation;
+    }
   }
 
-
-  void updateModel(Options newOptions){
-    if(newOptions != currentOption){
+  void updateModel(Options newOptions) {
+    if (newOptions != currentOption) {
       handleTimeDilation(newOptions);
       setState(() {
         currentOption = newOptions;
@@ -68,11 +67,10 @@ class _ModelBindingState extends State<ModelBinding> {
   }
 }
 
-
 class ModelBindingScope extends InheritedWidget {
   ModelBindingScope({
     Key key,
-    @required this.modelBindingState,
+    this.modelBindingState,
     Widget child,
   })  : assert(modelBindingState != null),
         super(key: key, child: child);

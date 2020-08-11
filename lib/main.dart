@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:web/config/constants.dart';
 import 'package:web/config/model_binding.dart';
 import 'package:web/pages/main_page.dart';
@@ -37,8 +38,7 @@ class BlogApp extends StatelessWidget {
           return MaterialApp(
             title: 'Xblydxj\'Blog',
             debugShowCheckedModeBanner: false,
-            themeMode: Options.of(context)
-                .themeMode,
+            themeMode: Options.of(context).themeMode,
             theme: CThemeData.lightThemeData,
             darkTheme: CThemeData.darkThemeData,
             initialRoute: initialRoute,
@@ -51,9 +51,12 @@ class BlogApp extends StatelessWidget {
 }
 
 class RootPage extends StatelessWidget {
-  const RootPage({
+  RootPage({
     Key key,
-  }) : super(key: key);
+  }) : super(key: key) {
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  }
 
   @override
   Widget build(BuildContext context) {
