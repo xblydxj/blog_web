@@ -78,15 +78,13 @@ class _MainPageState extends State<MainPage>
           ),
           Expanded(
             child: PageView(
+              physics: NeverScrollableScrollPhysics(),
               controller: _pageController,
               children: _mainList,
               scrollDirection: Axis.vertical,
               reverse: false,
-              onPageChanged: (position) {
-                setState(() {
-                  _selectedIndex = position;
-                });
-              },
+              onPageChanged: (position) =>
+                  setState(() => _selectedIndex = position),
             ),
           )
         ],
