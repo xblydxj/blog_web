@@ -16,13 +16,13 @@ class MainBackground extends CustomPainter {
       ..moveTo(radius, 0)
       ..arcToPoint(Offset(0, radius),
           radius: Radius.circular(radius), clockwise: false)
-      ..lineTo(0, top / 2)
-      ..arcToPoint(Offset(top / 3, top - 3),
-          radius: Radius.circular(top / 2), clockwise: false)
-      ..arcToPoint(Offset(top / 2, top * 5 / 4 - 4),
-          radius: Radius.circular(top / 4))
-      ..lineTo(top / 2, size.height - radius)
-      ..arcToPoint(Offset(top / 2 + radius, size.height),
+      ..lineTo(0, top)
+      ..arcToPoint(Offset(radius, top + radius),
+          radius: Radius.circular(radius), clockwise: false)
+      ..arcToPoint(Offset(top + radius, top * 2 + radius),
+          radius: Radius.circular(top))
+      ..lineTo(top + radius, size.height - radius)
+      ..arcToPoint(Offset(top + radius + radius, size.height),
           radius: Radius.circular(radius), clockwise: false)
       ..lineTo(size.width - radius, size.height)
       ..arcToPoint(Offset(size.width, size.height - radius),

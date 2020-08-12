@@ -8,4 +8,4 @@ const double systemTextScaleFactorOption = -1;
 const BackgroundModel currentBackgroundModel = BackgroundModel
     .DoubleColorGradient;
 
-const Color mainColor = Colors.tealAccent;
+const Color mainColor = Colors.teal;

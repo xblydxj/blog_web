@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-
-class ArticlePage extends StatefulWidget {
+class Search extends StatefulWidget {
   @override
-  _ArticlePageState createState() => _ArticlePageState();
+  _SearchState createState() => _SearchState();
 }
 
-class _ArticlePageState extends State<ArticlePage> with SingleTickerProviderStateMixin {
+class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
   @override
@@ -23,8 +22,6 @@ class _ArticlePageState extends State<ArticlePage> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-
-    );
+    return Container();
   }
 }

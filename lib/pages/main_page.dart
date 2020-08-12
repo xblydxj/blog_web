@@ -68,7 +68,7 @@ class _MainPageState extends State<MainPage>
           Container(
             color: Colors.transparent,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+//              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _account(),
@@ -95,15 +95,19 @@ class _MainPageState extends State<MainPage>
   }
 
   Widget _buildTabBar() => MainNavigationRail(
+        trailing: Icon(
+          Icons.ac_unit,
+          color: Colors.black12,
+        ),
         backgroundColor: Colors.transparent,
-        unselectedLabelTextStyle: TextStyle(fontSize: 10, color: Colors.grey),
-        selectedLabelTextStyle: TextStyle(fontSize: 10, color: mainColor),
+        unselectedLabelTextStyle: TextStyle(fontSize: 10, color: mainColor),
+        selectedLabelTextStyle: TextStyle(fontSize: 10, color: Colors.white),
         destinations: [
-          buildDestination("文章", 0, _articleSelected, _articleUnselected),
-          buildDestination("收集", 1, _collectionSelected, _collectionUnselected),
-          buildDestination("阅读", 2, _readSelected, _readUnselected),
-          buildDestination("学习", 3, _studySelected, _studyUnselected),
-          buildDestination("其他", 4, _collection, _collection),
+          buildDestination("文章", 0, Icons.article_rounded),
+          buildDestination("收集", 1, Icons.style_rounded),
+          buildDestination("阅读", 2, Icons.menu_book),
+          buildDestination("学习", 3, Icons.attach_file),
+          buildDestination("其他", 4, Icons.dashboard_rounded),
         ],
         onDestinationSelected: (index) {
           setState(() {
@@ -117,18 +121,10 @@ class _MainPageState extends State<MainPage>
       );
 
   MainNavigationRailDestination buildDestination(
-      String text, int railNum, String selectedAsset, String unselectedAsset) {
+      String text, int railNum, IconData icon) {
     return MainNavigationRailDestination(
-      icon: Image.asset(
-        unselectedAsset,
-        width: 25,
-        height: 25,
-      ),
-      selectedIcon: Image.asset(
-        selectedAsset,
-        width: 25,
-        height: 25,
-      ),
+      icon: Icon(icon, size: 18, color: mainColor),
+      selectedIcon: Icon(icon, size: 18, color: Colors.white),
       label: Padding(
           padding: EdgeInsets.only(top: 5),
           child: Text(text, textAlign: TextAlign.center)),
@@ -142,18 +138,3 @@ class _MainPageState extends State<MainPage>
     );
   }
 }
-
-const _article = "assets/tab/article.png";
-const _study = "assets/tab/study.png";
-const _other = "assets/tab/other.png";
-const _read = "assets/tab/read.png";
-const _collection = "assets/tab/collection.png";
-
-const _articleSelected = "assets/main_tab/article_selected.png";
-const _articleUnselected = "assets/main_tab/article_unselected.png";
-const _collectionSelected = "assets/main_tab/collection_selected.png";
-const _collectionUnselected = "assets/main_tab/collection_unselected.png";
-const _readSelected = "assets/main_tab/read_selected.png";
-const _readUnselected = "assets/main_tab/read_unselected.png";
-const _studySelected = "assets/main_tab/study_selected.png";
-const _studyUnselected = "assets/main_tab/study_unselected.png";
