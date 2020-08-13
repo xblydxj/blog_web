@@ -36,7 +36,7 @@ class BlogApp extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return MaterialApp(
-            title: 'Xblydxj\'Blog',
+            title: 'Sibre',
             debugShowCheckedModeBanner: false,
             themeMode: Options.of(context).themeMode,
             theme: CThemeData.lightThemeData,

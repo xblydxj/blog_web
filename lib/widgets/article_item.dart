@@ -1,17 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web/net/bean/article.dart';
 
-var json = {
-  "title": "title",
-  "content": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  "id": 1,
-  "reads": 10,
-  "comments": 20,
-  "picture": [],
-  "time": "2020-08-11",
-  "type": 0
-};
-
 class ArticleItem1 extends StatelessWidget {
   Article article;
 
@@ -19,23 +8,48 @@ class ArticleItem1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 20, left: 180),
-          width: 300,
-          height: 200,
-          decoration: BoxDecoration(
-              border: Border(),
-            borderRadius:
-          ),
-        ),
-        Image.network(
-          article.picture.first,
-          width: 200,
-          height: 200,
-        ),
-      ],
-    );
+    return Container(
+        padding: EdgeInsets.symmetric(vertical: 30, horizontal: 40),
+        child: Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 40, left: 350),
+              width: 600,
+              height: 300,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(4, 4),
+                        blurRadius: 3.0)
+                  ]),
+            ),
+            Container(
+              width: 400,
+              height: 300,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(-4, -4),
+                        blurRadius: 5.0)
+                  ]),
+              child: CircleAvatar(
+                  child: Image.network(
+                    article.picture.first,
+                    fit: BoxFit.fitHeight,
+                    width: 400,
+                    height: 300,
+                  ),
+                  radius: 5.0),
+            )
+          ],
+        ));
   }
 }

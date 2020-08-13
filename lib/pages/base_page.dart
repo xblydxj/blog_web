@@ -40,7 +40,7 @@ class BasePage extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               CustomPaint(painter: MainBackground(top: 100, radius: 5)),
-              topBar(),
+              topBar(context),
 //              WhaleLogo(key, size: Size(100.0, 0)),
               child,
             ],
@@ -50,7 +50,7 @@ class BasePage extends StatelessWidget {
     ));
   }
 
-  topBar() {
+  topBar(BuildContext context) {
     return Container(
         padding: EdgeInsets.symmetric(vertical: 35, horizontal: 30),
         child: Row(
@@ -59,7 +59,7 @@ class BasePage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 150,
+              width: MediaQuery.of(context).size.width / 10,
               child: Text(
                 'Sibre.',
                 style: GoogleFonts.lato(
@@ -78,20 +78,14 @@ class BasePage extends StatelessWidget {
                     child: CupertinoTextField(
                         decoration: BoxDecoration(
                           color: CupertinoDynamicColor.withBrightness(
-                            color: CupertinoColors.systemGrey,
+                            color: CupertinoColors.systemGrey6,
                             darkColor: CupertinoColors.systemGrey6,
-                          ),
-                          border: Border(
-                            top: _kDefaultRoundedBorderSide,
-                            bottom: _kDefaultRoundedBorderSide,
-                            left: _kDefaultRoundedBorderSide,
-                            right: _kDefaultRoundedBorderSide,
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                         placeholder: 'search',
                         placeholderStyle:
-                            TextStyle(color: Colors.black26, fontSize: 14),
+                            TextStyle(color: Colors.black45, fontSize: 15),
                         clearButtonMode: OverlayVisibilityMode.editing,
                         readOnly: false,
                         controller: TextEditingController(),
@@ -133,11 +127,4 @@ class BasePage extends StatelessWidget {
 
 const avatar30 = 'assets/avatar/avatar_male_30.png';
 const avatar20 = 'assets/avatar/avatar_male_20.png';
-const BorderSide _kDefaultRoundedBorderSide = BorderSide(
-  color: CupertinoDynamicColor.withBrightness(
-    color: Color(0x33000000),
-    darkColor: Color(0x33FFFFFF),
-  ),
-  style: BorderStyle.solid,
-  width: 0.0,
-);
+

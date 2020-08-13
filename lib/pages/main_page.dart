@@ -22,14 +22,6 @@ class _MainPageState extends State<MainPage>
   PageController _pageController;
   int _selectedIndex = 0;
 
-  final tabsMap = {
-    '文章': "tab/article.png",
-    '收集': "tab/study.png",
-    '时间线': "tab/collection.png",
-    '分类': "tab/collection.png",
-    '我的': "tab/account_selected.png",
-    '其他': "tab/other.png",
-  };
   final tabs = ['文章', '收集', '阅读', '学习', '其他'];
 
   final List<Widget> _mainList = [
@@ -68,7 +60,6 @@ class _MainPageState extends State<MainPage>
           Container(
             color: Colors.transparent,
             child: Column(
-//              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _account(),
@@ -77,26 +68,27 @@ class _MainPageState extends State<MainPage>
             ),
           ),
           Expanded(
-            child: PageView(
-              physics: NeverScrollableScrollPhysics(),
-              controller: _pageController,
-              children: _mainList,
-              scrollDirection: Axis.vertical,
-              reverse: false,
-              onPageChanged: (position) =>
-                  setState(() => _selectedIndex = position),
+            child: Container(
+              margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 10, left: 50,
+                  right: 50),
+              child: PageView(
+                physics: NeverScrollableScrollPhysics(),
+                controller: _pageController,
+                children: _mainList,
+                scrollDirection: Axis.vertical,
+                reverse: false,
+                onPageChanged: (position) =>
+                    setState(() => _selectedIndex = position),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
   Widget _buildTabBar() => MainNavigationRail(
-        trailing: Icon(
-          Icons.ac_unit,
-          color: Colors.black12,
-        ),
         backgroundColor: Colors.transparent,
         unselectedLabelTextStyle: TextStyle(fontSize: 10, color: mainColor),
         selectedLabelTextStyle: TextStyle(fontSize: 10, color: Colors.white),
