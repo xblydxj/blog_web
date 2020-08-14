@@ -18,6 +18,7 @@ class Article {
     this.picture,
     this.time,
     this.type,
+    this.tags,
   });
 
   String title;
@@ -26,6 +27,7 @@ class Article {
   int reads;
   int comments;
   List<String> picture;
+  List<String> tags;
   String time;
   int type;
 
@@ -36,6 +38,7 @@ class Article {
     reads: json["reads"],
     comments: json["comments"],
     picture: List<String>.from(json["picture"].map((x) => x)),
+    tags: List<String>.from(json["tags"].map((x) => x)),
     time: json["time"],
     type: json["type"],
   );
@@ -47,6 +50,7 @@ class Article {
     "reads": reads,
     "comments": comments,
     "picture": List<dynamic>.from(picture.map((x) => x)),
+    "tags": List<dynamic>.from(tags.map((x) => x)),
     "time": time,
     "type": type,
   };
