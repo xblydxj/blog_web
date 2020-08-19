@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:web/net/bean/article.dart';
 import 'package:web/widgets/article_item.dart';
+import 'package:web/widgets/article_item2.dart';
 
 var json = {
   "title": "C++反射思路及dart的反射实现",
@@ -51,28 +53,65 @@ class _ArticlePageState extends State<ArticlePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
+      drawer: Container(),
       body: Container(
+          margin: EdgeInsets.only(top: 20),
           child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [_directory(), Expanded(child: _article())],
-      )),
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [_directory(), Expanded(child: _article())],
+          )),
     );
   }
 
-  _article() => ListView.builder(
+  _article() => Container(
+      margin: EdgeInsets.symmetric(horizontal: 30),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 30,
+            crossAxisSpacing: 25,
+            childAspectRatio: 1 / 0.560),
         shrinkWrap: true,
         itemCount: list.length,
-        itemBuilder: (_, index) => ArticleItem1(article: list[index]),
+        itemBuilder: (_, index) => ArticleItem2(article: list[index]),
         scrollDirection: Axis.vertical,
-      );
+      ));
 
   _directory() {
     return Container(
-      width: 120,
+      margin: EdgeInsets.only(left: 2, right: 3, bottom: 20),
+      width: 230,
+      decoration: BoxDecoration(
+          color: Colors.teal,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.teal.withOpacity(0.5),
+                blurRadius: 2,
+                spreadRadius: 1)
+          ],
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: ListView(
-        children: list.map((e) => FlatButton.icon(onPressed: _directory,
-            icon: Icon(Icons.ac_unit_rounded), label: null)).toList(),
+        children: list
+            .map((e) => Container(
+                margin: EdgeInsets.only(top: 3, bottom: 3, left: 5),
+                child: FlatButton.icon(
+                    onPressed: _directory,
+                    icon: Icon(Icons.circle, size: 12),
+                    label: Container(
+                        width: 177,
+                        child: Text(e.title,
+                            textAlign: TextAlign.justify,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.nanumGothic(
+                              textStyle: TextStyle(fontSize: 12),
+                            ))))))
+            .toList(),
       ),
     );
   }
