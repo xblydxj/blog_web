@@ -60,7 +60,7 @@ class _ArticlePageState extends State<ArticlePage>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_directory(), Expanded(child: _article())],
+            children: [Expanded(child: _article())],
           )),
     );
   }

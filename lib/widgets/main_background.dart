@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainBackground extends CustomPainter {
@@ -9,7 +10,7 @@ class MainBackground extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
-      ..color = Colors.white
+      ..color = CupertinoColors.systemGrey6
       ..isAntiAlias = true
       ..style = PaintingStyle.fill;
     Path path = Path()
