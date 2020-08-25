@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:web/net/bean/article.dart';
 import 'package:web/widgets/article_item.dart';
 import 'package:web/widgets/article_item2.dart';
+import 'package:web/widgets/article_item3.dart';
 
 var json = {
   "title": "C++反射思路及dart的反射实现",
@@ -68,17 +69,17 @@ class _ArticlePageState extends State<ArticlePage>
   _article() => Container(
       margin: EdgeInsets.symmetric(horizontal: 30),
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.transparent,
           borderRadius: BorderRadius.all(Radius.circular(15.0))),
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 30,
             crossAxisSpacing: 25,
-            childAspectRatio: 1 / 0.560),
+            childAspectRatio: 1 / 0.618),
         shrinkWrap: true,
         itemCount: list.length,
-        itemBuilder: (_, index) => ArticleItem2(article: list[index]),
+        itemBuilder: (_, index) => ArticleItem3(article: list[index]),
         scrollDirection: Axis.vertical,
       ));
 

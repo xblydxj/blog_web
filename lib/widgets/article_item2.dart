@@ -28,13 +28,13 @@ class ArticleItem2 extends StatelessWidget {
         ),
       ),
       Container(
-          height: 200,
+          height: 230,
           margin: EdgeInsets.only(top: 2, bottom: 40, right: 2, left: 1),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(1.0)),
             image: DecorationImage(
                 image: NetworkImage(article.picture.first),
-                fit: BoxFit.fitHeight),
+                fit: BoxFit.fill),
           ),
           child: Container(
               color: Colors.grey.shade200.withOpacity(0.2),
