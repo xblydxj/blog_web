@@ -54,66 +54,60 @@ class _ArticlePageState extends State<ArticlePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
       drawer: Container(),
+      backgroundColor: Colors.white,
       body: Container(
-          margin: EdgeInsets.only(top: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Expanded(child: _article())],
-          )),
+          padding: EdgeInsets.only(top: 30, right: 10, left: 10),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              boxShadow: [
+                BoxShadow(color: Colors.black12, blurRadius: 2, spreadRadius: 2)
+              ]),
+          margin: EdgeInsets.only(top: 2, right: 2, left: 2, bottom: 52),
+          child: Container(
+              width: 1400,
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [Expanded(child: _article())],
+              ))),
     );
   }
 
-  _article() => Container(
-      margin: EdgeInsets.symmetric(horizontal: 30),
-      decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.all(Radius.circular(15.0))),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 30,
-            crossAxisSpacing: 25,
-            childAspectRatio: 1 / 0.618),
-        shrinkWrap: true,
-        itemCount: list.length,
-        itemBuilder: (_, index) => ArticleItem3(article: list[index]),
-        scrollDirection: Axis.vertical,
-      ));
+  _article() =>
+      Container(
+          margin: EdgeInsets.symmetric(horizontal: 30),
+          decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 50,
+                crossAxisSpacing: 50,
+                childAspectRatio: 1 / 0.48),
+            shrinkWrap: false,
+            itemCount: list.length,
+            itemBuilder: (_, index) => ArticleItem3(article: list[index]),
+            scrollDirection: Axis.vertical,
+          ));
 
   _directory() {
     return Container(
-      margin: EdgeInsets.only(left: 2, right: 3, bottom: 20),
-      width: 230,
-      decoration: BoxDecoration(
-          color: Colors.teal,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.teal.withOpacity(0.5),
-                blurRadius: 2,
-                spreadRadius: 1)
-          ],
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      child: ListView(
-        children: list
-            .map((e) => Container(
-                margin: EdgeInsets.only(top: 3, bottom: 3, left: 5),
-                child: FlatButton.icon(
-                    onPressed: _directory,
-                    icon: Icon(Icons.circle, size: 12),
-                    label: Container(
-                        width: 177,
-                        child: Text(e.title,
-                            textAlign: TextAlign.justify,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.nanumGothic(
-                              textStyle: TextStyle(fontSize: 12),
-                            ))))))
-            .toList(),
-      ),
+        margin: EdgeInsets.only(left: 2, right: 3, bottom: 20),
+        width: 230,
+        decoration: BoxDecoration(
+            color: Colors.teal,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.teal.withOpacity(0.5),
+                  blurRadius: 2,
+                  spreadRadius: 1)
+            ],
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        child: Container()
     );
   }
 }

@@ -18,11 +18,9 @@ class BasePage extends StatelessWidget {
         body: Stack(
       children: [
         Background(),
+        Center(child:
         Container(
-          margin: EdgeInsets.symmetric(
-              vertical: media.size.height / 10,
-              horizontal: media.size.width / 8),
-          width: media.size.width * 6 / 8,
+          width: media.size.height * 8 / 10 / 0.618,
           height: media.size.height * 8 / 10,
           padding: EdgeInsets.all(3),
           key: key,
@@ -45,7 +43,7 @@ class BasePage extends StatelessWidget {
               child,
             ],
           ),
-        )
+        ),)
       ],
     ));
   }
