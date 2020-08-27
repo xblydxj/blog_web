@@ -14,12 +14,22 @@ class ArticlePage2 extends StatefulWidget {
 
 class _ArticlePage2State extends State<ArticlePage2>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  ScrollController _controller;
   List<Article> list;
 
   @override
   void initState() {
-    _controller = AnimationController(vsync: this);
+    _controller = ScrollController();
+    //   ..addListener(() {
+    //     // print(_controller.position.pixels);
+    //     print((_controller.position.pixels / 200 / 0.618));
+    //     print(_controller.runtimeType);
+    //     if (_controller.runtimeType is ScrollEndNotification)
+    //       _controller.animateTo(
+    //           (_controller.position.pixels / 200 / 0.618).round().toDouble(),
+    //           duration: Duration(milliseconds: 500),
+    //           curve: Curves.easeInOut);
+    //   });
     super.initState();
     list = [
       Article.fromJson(json),
@@ -77,60 +87,82 @@ class _ArticlePage2State extends State<ArticlePage2>
                                   ]))))))
                   .toList(),
             ),
-            Container(
-              padding: EdgeInsets.only(right: 100),
-              child: Align(
+            Align(
                 alignment: Alignment.centerRight,
-                child: PageView(
-                  children: list
-                      .map((article) => Container(
-                            width: 200,
-                            height: 200 * 0.618,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(article.picture.first),
-                                  fit: BoxFit.fill),
-                            ),
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    width: 40,
-                                    height: 45,
-                                    child: Center(
-                                        child: Text(
-                                      "\＂",
-                                      style: TextStyle(
-                                          color: mainColor,
-                                          fontSize: 40,
-                                          fontWeight: FontWeight.bold),
-                                    )),
+                child: Container(
+                    width: 250,
+                    margin: EdgeInsets.only(right: 100),
+                    child: NotificationListener<ScrollNotification>(
+                      onNotification: (ScrollNotification notification) {
+                        print(notification.metrics.pixels / 200 / 0.618);
+                        // print(_controller.position.pixels / 200 / 0.618);
+                        print(notification.runtimeType);
+                        if (notification.runtimeType is ScrollEndNotification) {
+                          _controller.animateTo(
+                              (notification.metrics.pixels / 200 / 0.618)
+                                  .round()
+                                  .toDouble(),
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.easeInOut);
+                          // return true;
+                        }
+                        return false;
+                      },
+                      child: ListView(
+                        controller: _controller,
+                        scrollDirection: Axis.vertical,
+                        children: list
+                            .map((article) => Container(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 10),
+                                  height: 230 * 0.618,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image:
+                                            NetworkImage(article.picture.first),
+                                        fit: BoxFit.fill),
                                   ),
-                                  Expanded(
-                                      child: Text(
-                                    article.title,
-                                    maxLines: 2,
-                                    style: GoogleFonts.nanumGothic(
-                                        textStyle: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color:
-                                                Colors.black87.withOpacity(0.8),
-                                            fontSize: 20)),
-                                    textAlign: TextAlign.justify,
-                                    overflow: TextOverflow.ellipsis,
-                                  )),
-                                ],
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                ),
-              ),
-            )
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          width: 40,
+                                          height: 45,
+                                          child: Center(
+                                              child: Text(
+                                            "\＂",
+                                            style: TextStyle(
+                                                color: mainColor,
+                                                fontSize: 40,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
+                                        Expanded(
+                                            child: Text(
+                                          article.title,
+                                          maxLines: 2,
+                                          style: GoogleFonts.nanumGothic(
+                                              textStyle: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black87
+                                                      .withOpacity(0.8),
+                                                  fontSize: 20)),
+                                          textAlign: TextAlign.justify,
+                                          overflow: TextOverflow.ellipsis,
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                      ),
+                    ))),
           ],
         ),
       ),

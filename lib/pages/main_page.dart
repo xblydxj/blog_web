@@ -6,6 +6,7 @@ import 'package:web/widgets/main_tab.dart';
 
 import 'account_page.dart';
 import 'article_page.dart';
+import 'article_page2.dart';
 import 'category_page.dart';
 import 'collection_page.dart';
 import 'other_page.dart';
@@ -25,7 +26,7 @@ class _MainPageState extends State<MainPage>
   final tabs = ['文章', '收集', '阅读', '学习', '其他'];
 
   final List<Widget> _mainList = [
-    ArticlePage(),
+    ArticlePage2(),
     CollectionPage(),
     StudyPage(),
     ReadPage(),
@@ -69,6 +70,7 @@ class _MainPageState extends State<MainPage>
           ),
           Expanded(
             child: Container(
+
               margin: EdgeInsets.only(
                   top: MediaQuery.of(context).size.height / 10, left: 50,
                   right: 50),
