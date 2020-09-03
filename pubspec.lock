@@ -226,6 +226,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.3.2+1"
+  quantize_dart:
+    dependency: "direct main"
+    description:
+      name: quantize_dart
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.3"
   sa_anicoto:
     dependency: transitive
     description:

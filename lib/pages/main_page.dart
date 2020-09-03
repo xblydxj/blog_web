@@ -70,9 +70,8 @@ class _MainPageState extends State<MainPage>
           ),
           Expanded(
             child: Container(
-
               margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 10, left: 50,
+                  top: 105, left: 50,
                   right: 50),
               child: PageView(
                 physics: NeverScrollableScrollPhysics(),
