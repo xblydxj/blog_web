@@ -34,7 +34,7 @@ class ArticleItem1 extends StatelessWidget {
                     ],
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     image: DecorationImage(
-                        image: NetworkImage(article.picture.first),
+                        image: NetworkImage(article.picture),
                         fit: BoxFit.fill),
                   ),
                 ),

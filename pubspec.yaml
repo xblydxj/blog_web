@@ -21,6 +21,7 @@ dependencies:
   provider: ^4.1.2
   dio: ^3.0.0
   quantize_dart: ^1.0.3
+  flustars: ^0.3.2
 
 dev_dependencies:
   flutter_test:
@@ -44,6 +45,24 @@ flutter:
     - assets/main_tab/read_unselected.png
     - assets/main_tab/study_selected.png
     - assets/main_tab/study_unselected.png
+    - assets/tags/android.png
+    - assets/tags/basic.png
+    - assets/tags/cook.png
+    - assets/tags/dart.png
+    - assets/tags/flutter.png
+    - assets/tags/game.png
+    - assets/tags/java.png
+    - assets/tags/music.png
+    - assets/tags/python.png
+    - assets/tags/travel.png
+    - assets/tags/video.png
+    - assets/series/基础.png
+    - assets/series/学习.png
+    - assets/series/探索.png
+    - assets/series/收集.png
+    - assets/series/灵感.png
+    - assets/series/生活.png
+    - assets/series/进阶.png
 
 
 

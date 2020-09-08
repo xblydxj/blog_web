@@ -27,7 +27,7 @@ class ArticleItem3 extends StatelessWidget {
                         height: 210,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: NetworkImage(article.picture.first),
+                              image: NetworkImage(article.picture),
                               fit: BoxFit.fill),
                         ),
                         child: ClipRect(
@@ -109,7 +109,7 @@ class ArticleItem3 extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(1.0)),
                 image: DecorationImage(
-                    image: NetworkImage(article.picture.first),
+                    image: NetworkImage(article.picture),
                     fit: BoxFit.fill),
                 boxShadow: [
                   BoxShadow(

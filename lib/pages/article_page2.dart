@@ -34,12 +34,12 @@ class _ArticlePage2State extends State<ArticlePage2>
     _controller2 = PageController();
     super.initState();
     list = [
-      Article.fromJson(json),
-      Article.fromJson(json),
-      Article.fromJson(json),
-      Article.fromJson(json),
-      Article.fromJson(json),
-      Article.fromJson(json),
+      Article.fromJson(json1),
+      Article.fromJson(json2),
+      Article.fromJson(json3),
+      Article.fromJson(json1),
+      Article.fromJson(json2),
+      Article.fromJson(json3),
     ];
   }
 
@@ -63,7 +63,7 @@ class _ArticlePage2State extends State<ArticlePage2>
                   .map((article) => Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: NetworkImage(article.picture.first),
+                            image: NetworkImage(article.picture),
                             fit: BoxFit.fill),
                       ),
                       child: ClipRect(

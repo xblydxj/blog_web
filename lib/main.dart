@@ -1,18 +1,43 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:web/config/constants.dart';
 import 'package:web/config/model_binding.dart';
 import 'package:web/pages/main_page.dart';
+import 'package:web/provider/article_provider.dart';
 import 'package:web/route.dart';
 
+import 'config/error_report.dart';
 import 'config/options.dart';
 import 'config/theme_data.dart';
 import 'pages/base_page.dart';
 
 void main() {
-  runApp(BlogApp());
+  // runZonedGuarded<Future<Null>>(() async {
+    runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: ArticleProvider())
+      ],
+      child: BlogApp(),
+    ));
+  // }, (error, stackTrace) async {
+  //   await _reportError(error, stackTrace);
+  // });
+  //
+  // FlutterError.onError = (FlutterErrorDetails details) {
+  //   if (isTest) FlutterError.dumpErrorToConsole(details);
+  //   Zone.current.handleUncaughtError(details.exception, details.stack);
+  // };
 }
+
+_reportError(Object error, StackTrace stackTrace) {
+  print('error:$error,\nstackTrace:$stackTrace');
+  // ReportError.decorate(error, stackTrace.toString()).report();
+}
+
 
 class BlogApp extends StatelessWidget {
   const BlogApp({
