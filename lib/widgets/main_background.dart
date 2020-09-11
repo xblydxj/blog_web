@@ -10,7 +10,7 @@ class MainBackground extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
-      ..color = CupertinoColors.white
+      ..color = CupertinoColors.systemGrey6
       ..isAntiAlias = true
       ..style = PaintingStyle.fill;
     Path path = Path()

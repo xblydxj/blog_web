@@ -13,10 +13,9 @@ var json1 = {
   "id": 0,
   "reads": 10,
   "comments": 20,
-  "tags": ["flutter", "dart"],
-  "pictures": [
-    "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597387733850&di=663058166e9f9400775b62e68ff3290f&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20181218%2Fdc4e2785878841108bb58cf088aa3201.jpeg"
-  ],
+  "tags": "flutter, dart",
+  "pictures":
+      "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597387733850&di=663058166e9f9400775b62e68ff3290f&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20181218%2Fdc4e2785878841108bb58cf088aa3201.jpeg",
   "time": "2020-08-11",
   "type": 0,
   "link":
@@ -31,13 +30,12 @@ var json2 = {
       "去年第一次使用mvp做了个 小应用 ，也是[干货集中营](gank.io)的安卓客户端，Material的风格，MVP的架构，也使用了rxjava和retrofit，不过这期间没有去做过关于mvp的这样的总结，现在补上这篇",
   "reads": 1,
   "comments": 0,
-  "pictures": [
-    "http://xblydxj-blog.oss-cn-hangzhou.aliyuncs.com/article_pictures/0_main.png"
-  ],
+  "pictures":
+      "http://xblydxj-blog.oss-cn-hangzhou.aliyuncs.com/article_pictures/0_main.png",
   "time": "2017-07-16",
   "link":
       "http://xblydxj-blog.oss-cn-hangzhou.aliyuncs.com/article/%E8%BF%9F%E5%88%B0%E7%9A%84MVP.md",
-  "tags": ["android", "java"],
+  "tags": "android, java",
   "category": "学习"
 };
 
@@ -48,13 +46,12 @@ var json3 = {
       "当时的温度高达36摄氏度，很后悔，晚了一礼拜，前一个礼拜还有春意，现在就是大夏天了，回来之后皮肤也发红了。\n 整天待在家里，就知道宅，出去玩了一趟发现确实还是宅好。\n 计划了好几个礼拜，作为上海一个较为出名的自然景观，呆着一些憧憬前往的，然鹅",
   "reads": 1,
   "comments": 1,
-  "pictures": [
-    "http://xblydxj-blog.oss-cn-hangzhou.aliyuncs.com/article_pictures/1_main.png"
-  ],
+  "pictures":
+      "http://xblydxj-blog.oss-cn-hangzhou.aliyuncs.com/article_pictures/1_main.png",
   "time": "2017-07-14",
   "link":
       "http://xblydxj-blog.oss-cn-hangzhou.aliyuncs.com/article/%E5%B4%87%E6%98%8E%E5%B2%9B.md",
-  "tags": ["travel"],
+  "tags": "travel",
   "category": "生活"
 };
 

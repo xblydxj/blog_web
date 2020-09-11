@@ -98,7 +98,9 @@ class _ArticlePage2State extends State<ArticlePage2>
                 child: Transform.translate(
                   offset: Offset(0, -0),
                   child: RangePageView(
-                    allowImplicitScrolling: true,
+                    allowImplicitScrolling: false,
+                    pageSnapping: false,
+                    clipBehavior: Clip.hardEdge,
                     controller: _controller,
                     viewportFraction: 0.28,
                     onPageChanged: (index) {

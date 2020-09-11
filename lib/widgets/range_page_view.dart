@@ -75,7 +75,7 @@ class RangePageController extends ScrollController {
       physics: physics,
       context: context,
       initialPage: initialPage,
-      keepPage: keepPage,
+      // keepPage: keepPage,
       viewportFraction: viewportFraction,
       oldPosition: oldPosition,
     );
@@ -350,13 +350,13 @@ class RangePageView extends StatefulWidget {
   RangePageView({
     Key key,
     this.scrollDirection = Axis.horizontal,
-    this.reverse = false,
+    this.reverse = true,
     RangePageController controller,
     this.physics,
     this.pageSnapping = true,
     this.onPageChanged,
     List<Widget> children = const <Widget>[],
-    this.dragStartBehavior = DragStartBehavior.start,
+    this.dragStartBehavior = DragStartBehavior.down,
     this.allowImplicitScrolling = false,
     this.restorationId,
     this.clipBehavior = Clip.hardEdge,
@@ -536,13 +536,13 @@ class _RangePageViewState extends State<RangePageView> {
         physics: physics,
         restorationId: widget.restorationId,
         viewportBuilder: (BuildContext context, ViewportOffset position) {
-          ViewportOffset offsetPosition =
-              ViewportOffset.fixed(position?.pixels ?? 0 + 220.0);
+          // ViewportOffset offsetPosition =
+          //     ViewportOffset.fixed(position?.pixels ?? 0 + 220.0);
           return Viewport(
             cacheExtent: widget.allowImplicitScrolling ? 1.0 : 0.0,
             cacheExtentStyle: CacheExtentStyle.viewport,
             axisDirection: axisDirection,
-            offset: offsetPosition,
+            offset: position,
             clipBehavior: widget.clipBehavior,
             slivers: <Widget>[
               SliverFillViewport(

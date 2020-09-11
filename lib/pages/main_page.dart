@@ -3,6 +3,7 @@ import 'package:web/config/constants.dart';
 import 'package:web/pages/timeline_page.dart';
 import 'package:web/widgets/main_navigation_rail.dart';
 import 'package:web/widgets/main_tab.dart';
+import 'package:web/widgets/tips.dart';
 
 import 'account_page.dart';
 import 'article_page.dart';
@@ -50,6 +51,7 @@ class _MainPageState extends State<MainPage>
 
   @override
   Widget build(BuildContext context) {
+    Tip.instance.context = context;
     return Scaffold(
       key: _key,
       drawer: Container(
@@ -71,9 +73,7 @@ class _MainPageState extends State<MainPage>
           ),
           Expanded(
             child: Container(
-              margin: EdgeInsets.only(
-                  top: 105, left: 50,
-                  right: 50),
+              margin: EdgeInsets.only(top: 105, left: 50, right: 50),
               child: PageView(
                 physics: NeverScrollableScrollPhysics(),
                 controller: _pageController,

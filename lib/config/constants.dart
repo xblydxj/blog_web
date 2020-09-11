@@ -22,6 +22,16 @@ const seriesMap = {
   "收集": "assets/series/收集.png"
 };
 
+const seriesColorMap = {
+  "生活": Colors.red,
+  "学习": Colors.teal,
+  "探索": Colors.deepPurpleAccent,
+  "进阶": Colors.pink,
+  "基础": Colors.yellow,
+  "灵感": Colors.deepOrange,
+  "收集": Colors.green
+};
+
 const tagsMap = {
   "android": "assets/tags/android.png",
   "java": "assets/tags/java.png",

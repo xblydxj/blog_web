@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class HttpLogInterceptor extends Interceptor {
+  var startTime;
+  var endTime;
+
   @override
   Future onError(DioError err) {
     print("--------------------------------------");
@@ -16,6 +19,7 @@ class HttpLogInterceptor extends Interceptor {
 
   @override
   Future onRequest(RequestOptions options) {
+    startTime = DateTime.now().millisecondsSinceEpoch;
     print("--------------------------------------");
     print("请求开始：");
     print("- 请求地址：${options.baseUrl}${options.path}");
@@ -24,17 +28,15 @@ class HttpLogInterceptor extends Interceptor {
     print("- 请求方式：${options.method} ");
     print("- 请求参数：${options.data} ");
     if (options.data is String) json.encode(options.data);
-    print("  ");
     return super.onRequest(options);
   }
 
   @override
   Future onResponse(Response response) {
-    print("--------------------------------------");
     print("请求响应：");
     print("- 响应状态：${response.statusCode}");
+    print("- 耗时：${DateTime.now().millisecondsSinceEpoch - startTime}");
     print("- 响应参数：${response.data}");
-    print("  ");
     return super.onResponse(response);
   }
 }

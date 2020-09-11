@@ -9,6 +9,7 @@ import 'package:web/config/model_binding.dart';
 import 'package:web/pages/main_page.dart';
 import 'package:web/provider/article_provider.dart';
 import 'package:web/route.dart';
+import 'package:web/widgets/tips.dart';
 
 import 'config/error_report.dart';
 import 'config/options.dart';
@@ -67,6 +68,9 @@ class BlogApp extends StatelessWidget {
             theme: CThemeData.lightThemeData,
             darkTheme: CThemeData.darkThemeData,
             initialRoute: initialRoute,
+            builder: (context,child){
+              return child;
+            },
             onGenerateRoute: RouteConfiguration.onGenerateRoute,
           );
         },

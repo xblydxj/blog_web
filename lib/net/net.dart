@@ -39,29 +39,25 @@ class Net {
       bool needLoading = false,
       Function onComplete}) async {
     try {
-      if (needLoading) Tip.instance.loading(barrierDismissible: false);
+      if (needLoading) Tip.instance.loadingBook(barrierDismissible: false);
       Response<Map<String, dynamic>> response =
           await _dio.post(path, data: json.encode(params));
+      await Future.delayed(Duration(seconds: 2));
       BaseResponse baseResponse = BaseResponse.fromJson(response.data);
-      if (baseResponse.code == 0 && onSuccess != null) {
-        if (needLoading) Tip.instance.dismiss();
+      if (baseResponse.code == 0 && onSuccess != null)
         return onSuccess(baseResponse.result);
-      } else if (baseResponse.code != 0) {
-        if (needLoading) Tip.instance.dismiss();
+       else if (baseResponse.code != 0) {
         if (onFailed != null) return onFailed(baseResponse.message);
       }
-      if (needLoading) Tip.instance.dismiss();
     } on DioError catch (dioError) {
       print(dioError);
-      if (needLoading) Tip.instance.dismiss();
       return BaseResponse(code: 101, message: dioError.message);
     } catch (e, s) {
       print("未知异常出错：$e\n$s");
-      if (needLoading) Tip.instance.dismiss();
       return BaseResponse(code: 999, message: e.message);
     } finally {
-      if (needLoading) Tip.instance.dismiss();
       if (onComplete != null) onComplete();
+      if (needLoading) Tip.instance.dismiss();
     }
   }
 }

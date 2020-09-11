@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web/config/constants.dart';
@@ -9,10 +8,9 @@ import 'package:web/net/bean/article.dart';
 import 'package:web/net/net.dart';
 import 'package:web/provider/article_provider.dart';
 import 'package:web/widgets/animate_list_tile.dart';
+import 'package:web/widgets/article_item4.dart';
+import 'package:web/widgets/article_item5.dart';
 import 'package:web/widgets/range_page_view.dart';
-import 'dart:math' as math;
-
-import 'article_page.dart';
 
 class ArticlePage3 extends StatefulWidget {
   @override
@@ -20,25 +18,25 @@ class ArticlePage3 extends StatefulWidget {
 }
 
 class _ArticlePage3State extends State<ArticlePage3>
-    with SingleTickerProviderStateMixin {
-  ScrollController _controller;
-  var currentPage = 0;
+    with TickerProviderStateMixin {
+  RangePageController _controller;
+  int currentPage = 0;
+  double currentProgress = 0.0;
   List<Article> list;
-
   ArticleProvider _articleProvider;
 
   @override
   void initState() {
-    _controller = ScrollController()
-      ..addListener(() {
-        print(_controller.position);
-      });
+    _controller = RangePageController(viewportFraction: 0.15)
+      ..addListener(() => setState(() => currentProgress = _controller.page));
+    _articleProvider = Provider.of<ArticleProvider>(context, listen: false);
+
     super.initState();
 
-    _articleProvider = Provider.of<ArticleProvider>(context, listen: false);
     Net.instance.build().post(
         path: 'article/list',
-        params: {"pages": currentPage, "count": 10},
+        params: {"pages": 1, "count": 10},
+        needLoading: true,
         onSuccess: (data) => setState(() => list =
             (data["list"] as List<dynamic>)
                 .map((e) => Article.fromJson(e))
@@ -55,286 +53,327 @@ class _ArticlePage3State extends State<ArticlePage3>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       body: Stack(
-        children: [filter(), main()],
+        children: [main(), filter()],
       ),
     );
   }
 
   Widget filter() {
     return Container(
+        margin: EdgeInsets.only(top: 10, left: 70, right: 70),
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(2),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(0, 2),
+                  blurRadius: 2,
+                  spreadRadius: 1)
+            ]),
         child: Row(
-      children: [
-        //系列
-        // _series(),
-        // _tags(),
-      ],
-    ));
+          children: [
+            Expanded(
+                child: TextField(
+              decoration: InputDecoration(
+                  border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.teal)),
+                  hintText: 'key words',
+                  hintStyle: GoogleFonts.juliusSansOne(
+                      textStyle: TextStyle(
+                          color: CupertinoColors.systemGrey, fontSize: 14)),
+                  labelText: 'search by title',
+                  labelStyle: GoogleFonts.juliusSansOne(
+                      textStyle: TextStyle(
+                          color: CupertinoColors.systemGrey, fontSize: 14))),
+            )),
+            RaisedButton.icon(
+              color: Colors.teal,
+              onPressed: () {},
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              icon: Icon(
+                Icons.search,
+                size: 14,
+                color: Colors.white,
+              ),
+              label: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    'SEARCH',
+                    style: GoogleFonts.juliusSansOne(
+                        textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold)),
+                  )),
+            )
+          ],
+        ));
   }
 
-  Widget main() => Container(
-      child: list == null
-          ? SizedBox()
-          : Container(
-              margin:
-                  EdgeInsets.only(top: 100, left: 10, right: 10, bottom: 20),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      blurRadius: 2,
-                      spreadRadius: 1)
-                ],
-                image: DecorationImage(
-                    image: NetworkImage(list[currentPage]
-                        .picture
-                        .replaceAll(".png", "_blur.png")),
-                    fit: BoxFit.fill),
-              ),
-              child: Container(
-                child: Stack(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 340),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 80, horizontal: 50),
-                      child: Column(
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(Icons.format_quote,
-                                        size: 20,
-                                        color:
-                                            Colors.tealAccent.withOpacity(0.6)),
-                                    SizedBox(width: 6),
-                                    Expanded(
-                                        child: Text(list[currentPage].title,
-                                            style: GoogleFonts.josefinSans(
-                                                textStyle: TextStyle(
-                                                    color: Colors.white
-                                                        .withOpacity(0.9),
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold))))
-                                  ])),
-                          Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 30),
-                              decoration: BoxDecoration(
-                                  color: Colors.black12,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.black12,
-                                        blurRadius: 1.5,
-                                        spreadRadius: 1.5)
-                                  ],
-                                  borderRadius: BorderRadius.circular(10)),
-                              margin: EdgeInsets.only(top: 20),
-                              child: Text("       ${list[currentPage].content}",
-                                  strutStyle: StrutStyle(height: 1.5),
-                                  style: GoogleFonts.josefinSans(
-                                      textStyle: TextStyle(
-                                          color: Colors.white.withOpacity(0.8),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold)))),
-                          Container(
-                            margin:
-                                EdgeInsets.only(top: 10, left: 10, right: 10),
-                            child: Row(
-                              children: [
-                                tab(_reads, "${list[currentPage].comments}",
-                                    Icons.insert_comment, Colors.white),
-                                tab(_reads, "${list[currentPage].reads}",
-                                    Icons.remove_red_eye, Colors.white),
-                                Expanded(
-                                    child: Align(
-                                        alignment: Alignment.centerRight,
-                                        child: tab(
-                                            _reads,
-                                            "${list[currentPage].time}",
-                                            Icons.access_time,
-                                            Colors.white))),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Align(
-                        alignment: Alignment.bottomCenter,
+  Widget main() {
+    double opacity = 0;
+    if (list != null) opacity = 1.0 - (currentProgress / 1.0);
+    print(opacity);
+    return Container(
+        child: list == null
+            ? SizedBox()
+            : Stack(children: [
+                AnimatedSwitcher(
+                    switchInCurve: Curves.easeInCubic,
+                    transitionBuilder: (child, animation) =>
+                        FadeTransition(opacity: animation, child: child),
+                    duration: Duration(milliseconds: 500),
+                    child: Container(
+                        key: ValueKey<int>(currentPage),
+                        margin: EdgeInsets.only(
+                            top: 55, left: 10, right: 10, bottom: 20),
+                        padding: EdgeInsets.only(top: 30),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2),
+                            image: DecorationImage(
+                                image: NetworkImage(list[currentPage]
+                                    .picture
+                                    .replaceAll(".png", "_blur.png")),
+                                fit: BoxFit.fill),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black26,
+                                  offset: Offset(0, 1),
+                                  blurRadius: 5,
+                                  spreadRadius: 1)
+                            ]),
                         child: Container(
-                          margin: EdgeInsets.only(left: 390, right: 40),
-                          padding: EdgeInsets.only(left: 50, right: 50),
-                          height: 50,
-                          alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(50)),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.white,
-                                    offset: Offset(0, -2),
-                                    blurRadius: 1,
-                                    spreadRadius: 1)
-                              ]),
-                          child: FlatButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.expand_less,
-                                  size: 18, color: CupertinoColors.systemGrey),
-                              label: Text(
-                                'Read More',
-                                style: GoogleFonts.josefinSans(
-                                    textStyle: TextStyle(
-                                        fontSize: 16,
-                                        color: CupertinoColors.systemGrey)),
-                              )),
-                        )),
-                    Container(
-                      width: 270,
-                      margin: EdgeInsets.only(left: 70),
-                      child: ListView(
-                        controller: _controller,
-                        physics: _ForceImplicitScrollPhysics(
-                            allowImplicitScrolling: true,
-                            parent: RangePageScrollPhysics().applyTo(null)),
-                        padding: EdgeInsets.only(top: 10),
-                        children: list.map((e) => _item(e)).toList(),
-                        shrinkWrap: true,
-                      ),
-                    ),
-                  ],
-                ),
-              )));
+                          child: Stack(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 340),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 80, horizontal: 50),
+                                child: Column(
+                                  children: [
+                                    _title(),
+                                    _content(),
+                                    _desc(),
+                                    _tagsAndButton()
+                                  ],
+                                ),
+                              ),
+
+                              // Align(
+                              //     alignment: Alignment.bottomCenter,
+                              //     child: Container(
+                              //       margin:
+                              //           EdgeInsets.only(left: 390, right: 40),
+                              //       padding:
+                              //           EdgeInsets.only(left: 50, right: 50),
+                              //       height: 50,
+                              //       alignment: Alignment.centerLeft,
+                              //       decoration: BoxDecoration(
+                              //           color: Colors.white,
+                              //           borderRadius: BorderRadius.vertical(
+                              //               top: Radius.circular(50)),
+                              //           boxShadow: [
+                              //             BoxShadow(
+                              //                 color: Colors.white,
+                              //                 offset: Offset(0, -2),
+                              //                 blurRadius: 1,
+                              //                 spreadRadius: 1)
+                              //           ]),
+                              //       child: FlatButton.icon(
+                              //           onPressed: () {},
+                              //           icon: Icon(Icons.expand_less,
+                              //               size: 18,
+                              //               color: CupertinoColors.systemGrey),
+                              //           label: Text(
+                              //             'Read More',
+                              //             style: TextStyle(
+                              //                 fontSize: 16,
+                              //                 color:
+                              //                     CupertinoColors.systemGrey),
+                              //           )),
+                              //     )),
+                            ],
+                          ),
+                        ))),
+                Container(
+                    width: 250,
+                    margin: EdgeInsets.only(
+                        top: 20, left: 80, right: 10, bottom: 20),
+                    child: RangePageView(
+                      controller: _controller,
+                      scrollDirection: Axis.vertical,
+                      reverse: false,
+                      viewportFraction: 0.10,
+                      onPageChanged: (index) {
+                        print(index);
+                        setState(() {
+                          currentPage = index;
+                        });
+                      },
+                      children: list
+                          .map((article) =>
+                              _item2(article, list.indexOf(article)))
+                          .toList(),
+                    )),
+              ]));
+  }
 
   tab(Function onPress, String text, IconData icon, Color iconColor) =>
       FlatButton.icon(
           onPressed: onPress,
           icon: Icon(
             icon,
-            size: 16,
+            size: 13,
             color: Colors.white70,
           ),
           label: Text(text,
-              style: GoogleFonts.josefinSans(
+              style: GoogleFonts.rajdhani(
                   textStyle: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white70,
                       fontSize: 13))));
 
-  Widget _item(Article article) => Container(
-        margin: EdgeInsets.symmetric(vertical: 13),
-        height: 130,
-        child: Stack(
-          children: [
-            Container(
-                margin: EdgeInsets.only(left: 15, right: 22, top: 3, bottom: 3),
-                height: 130,
-                width: 240,
-                padding: EdgeInsets.all(10),
+  Widget _item2(Article article, int index) {
+    bool isCurrent = currentProgress == index;
+    double scale = 1.0 -
+        ((currentProgress - index).abs() >= 1
+            ? 1.0
+            : (currentProgress - index).abs());
+    return Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        color: Colors.transparent,
+        width: 160,
+        child: ArticleItem5(
+          isCurrent: isCurrent,
+          progress: scale,
+          article: article,
+          color: seriesColorMap[article.category],
+        ));
+  }
+
+  Widget _item(Article article, int index) {
+    bool isCurrent = currentProgress == index;
+    double scale = 1.0 -
+        ((currentProgress - index).abs() >= 1
+            ? 1.0
+            : (currentProgress - index).abs());
+    print(scale);
+
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 13),
+      height: 130,
+      child: Stack(
+        children: [
+          Container(
+              margin: EdgeInsets.only(left: 15, right: 22, top: 3, bottom: 3),
+              height: 130,
+              width: 240 + (scale * 40),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.black38,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black26, blurRadius: 10, spreadRadius: 1)
+                  ],
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular((scale * 15)),
+                      bottomRight: Radius.circular((scale * 15)),
+                      bottomLeft: Radius.circular(15))),
+              child: Container(
+                  padding: EdgeInsets.only(top: 5, left: 25, right: 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.format_quote,
+                          size: 16, color: Colors.tealAccent.withOpacity(0.8)),
+                      SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          article.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.8),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300),
+                        ),
+                      )
+                    ],
+                  ))),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+                margin: EdgeInsets.only(top: 12),
+                width: 36,
+                height: 36,
                 decoration: BoxDecoration(
-                    color: Colors.black38,
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(5),
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.black54, blurRadius: 1, spreadRadius: 1)
-                    ],
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(0))),
-                child: Container(
-                    padding: EdgeInsets.only(top: 5, left: 25, right: 2),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.format_quote,
-                            size: 16, color: Colors.white.withOpacity(0.6)),
-                        SizedBox(width: 4),
-                        Expanded(
-                          child: Text(
-                            article.title,
-                            style: TextStyle(
-                                color: Colors.white.withOpacity(0.6),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w300),
-                          ),
-                        )
-                      ],
-                    ))),
-            Align(
-              alignment: Alignment.topLeft,
+                          color: Colors.red.withOpacity(0.6),
+                          blurRadius: 1,
+                          spreadRadius: 1)
+                    ]),
+                child: Center(
+                    child: Image.asset(seriesMap[article.category],
+                        width: 18, height: 18))),
+          ),
+          Align(
+              alignment: Alignment.bottomLeft,
               child: Container(
-                  margin: EdgeInsets.only(top: 12),
-                  width: 36,
-                  height: 36,
-                  decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(6),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.red.withOpacity(0.4),
-                            blurRadius: 1,
-                            spreadRadius: 1)
-                      ]),
-                  child: Center(
-                      child: Image.asset(seriesMap[article.category],
-                          width: 18, height: 18))),
-            ),
-            Padding(
-                padding: EdgeInsets.only(bottom: 55, left: 32, right: 45),
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Divider(height: 1, color: Colors.white24),
-                )),
-            Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  height: 30,
-                  margin: EdgeInsets.only(left: 30, bottom: 15),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: article.tags
-                        .map((e) => Container(
-                            margin: EdgeInsets.all(3),
-                            width: 25,
-                            height: 25,
-                            decoration: BoxDecoration(
-                                color: CupertinoColors.systemGrey4
-                                    .withOpacity(0.6),
-                                borderRadius: BorderRadius.circular(12.5),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: CupertinoColors.systemGrey4
-                                          .withOpacity(0.4),
-                                      blurRadius: 1,
-                                      spreadRadius: 1)
-                                ]),
-                            child: Center(
-                                child: Image.asset(tagsMap[e],
-                                    width: 12, height: 12))))
-                        .toList(),
-                  ),
-                )),
-            Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                    padding: EdgeInsets.only(bottom: 5),
-                    child: Transform.scale(
-                        scale: 0.8,
-                        child: FloatingActionButton(
-                            onPressed: () {},
-                            backgroundColor: mainColor,
-                            mini: true,
-                            child: Icon(Icons.arrow_forward, size: 18)))))
-          ],
-        ),
-      );
+                height: 30,
+                margin: EdgeInsets.only(left: 30, bottom: 15),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: article.tags
+                      .map((e) => Container(
+                          margin: EdgeInsets.all(3),
+                          width: 25,
+                          height: 25,
+                          decoration: BoxDecoration(
+                              color:
+                                  CupertinoColors.systemGrey4.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(12.5),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: CupertinoColors.systemGrey4
+                                        .withOpacity(0.6),
+                                    blurRadius: 1,
+                                    spreadRadius: 1)
+                              ]),
+                          child: Center(
+                              child: Image.asset(tagsMap[e],
+                                  width: 12, height: 12))))
+                      .toList(),
+                ),
+              )),
+          Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                  padding:
+                      EdgeInsets.only(bottom: 5, right: (50 - (scale * 50))),
+                  child: Transform.scale(
+                      scale: 0.6,
+                      child: FloatingActionButton.extended(
+                          onPressed: () {},
+                          isExtended: isCurrent,
+                          backgroundColor: mainColor,
+                          label: !isCurrent
+                              ? SizedBox()
+                              : Text('Read More',
+                                  style: TextStyle(fontSize: 18)),
+                          icon: Icon(Icons.arrow_forward, size: 18)))))
+        ],
+      ),
+    );
+  }
 
   Widget _series() => Expanded(
       child: Container(
@@ -565,23 +604,113 @@ class _ArticlePage3State extends State<ArticlePage3>
           )));
 
   _reads() {}
-}
 
-class _ForceImplicitScrollPhysics extends ScrollPhysics {
-  const _ForceImplicitScrollPhysics({
-    @required this.allowImplicitScrolling,
-    ScrollPhysics parent,
-  })  : assert(allowImplicitScrolling != null),
-        super(parent: parent);
+  Widget _title() => Container(
+      margin: EdgeInsets.only(left: 10),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.format_quote,
+                size: 20, color: Colors.tealAccent.withOpacity(0.6)),
+            SizedBox(width: 6),
+            Expanded(
+                child: Text(list[currentPage].title,
+                    style: TextStyle(
+                        color: Colors.white.withOpacity(0.9),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)))
+          ]));
 
-  @override
-  _ForceImplicitScrollPhysics applyTo(ScrollPhysics ancestor) {
-    return _ForceImplicitScrollPhysics(
-      allowImplicitScrolling: allowImplicitScrolling,
-      parent: buildParent(ancestor),
-    );
-  }
+  Widget _content() => Container(
+      // padding: EdgeInsets.symmetric(
+      //     vertical: 20, horizontal: 30),
+      decoration: BoxDecoration(
+          color: Colors.black12,
+          boxShadow: [
+            BoxShadow(color: Colors.black26, blurRadius: 1.5, spreadRadius: 1.5)
+          ],
+          borderRadius: BorderRadius.circular(10)),
+      margin: EdgeInsets.only(top: 30),
+      child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          child: Text("     ${list[currentPage].content}",
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              strutStyle: StrutStyle(height: 1.5),
+              style: GoogleFonts.rajdhani(
+                  textStyle: TextStyle(
+                      color: Colors.white.withOpacity(0.8), fontSize: 14)))));
 
-  @override
-  final bool allowImplicitScrolling;
+  Widget _desc() => Container(
+        margin: EdgeInsets.only(top: 5, left: 10, right: 10),
+        child: Row(
+          children: [
+            tab(_reads, "${list[currentPage].time}", Icons.access_time,
+                Colors.white),
+            tab(_reads, "${list[currentPage].comments}", Icons.insert_comment,
+                Colors.white),
+            tab(_reads, "${list[currentPage].reads}", Icons.remove_red_eye,
+                Colors.white),
+          ],
+        ),
+      );
+
+  Widget _tagsAndButton() => Container(
+        height: 50,
+        margin: EdgeInsets.only(top: 20, right: 10),
+        child: Row(
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: 20),
+              height: 25,
+              width: 4,
+              decoration: BoxDecoration(
+                  color: seriesColorMap[list[currentPage].category],
+                  boxShadow: [
+                    BoxShadow(
+                        color: seriesColorMap[list[currentPage].category]
+                            .withOpacity(0.4),
+                        blurRadius: 1,
+                        spreadRadius: 1)
+                  ]),
+            ),
+            Container(
+              height: 30,
+              margin: EdgeInsets.only(left: 10),
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                children: list[currentPage]
+                    .tags
+                    .map((e) => Container(
+                        margin: EdgeInsets.all(3),
+                        width: 25,
+                        height: 25,
+                        decoration: BoxDecoration(
+                            color: CupertinoColors.white.withOpacity(0.8),
+                            borderRadius: BorderRadius.circular(12.5),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: CupertinoColors.white.withOpacity(0.6),
+                                  blurRadius: 0.5,
+                                  spreadRadius: 0.5)
+                            ]),
+                        child: Center(
+                            child: Image.asset(tagsMap[e],
+                                width: 12, height: 12))))
+                    .toList(),
+              ),
+            ),
+            Spacer(),
+            FlatButton.icon(
+                onPressed: () {},
+                icon: Icon(Icons.art_track, size: 16),
+                label: Text('Read More',
+                    style:
+                        GoogleFonts.armata(textStyle: TextStyle(fontSize: 12))))
+          ],
+        ),
+      );
 }

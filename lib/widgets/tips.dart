@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:web/config/constants.dart';
+import 'package:web/widgets/turn_book_loading.dart';
 
 class Tip {
   factory Tip() => instance;
@@ -22,6 +23,13 @@ class Tip {
           barrierColor: Colors.black12,
           context: context,
           builder: (context) => _buildLoading()));
+
+  loadingBook({barrierDismissible = true}) =>
+      WidgetsBinding.instance.addPostFrameCallback((_) => showTipDialog(
+          barrierDismissible: barrierDismissible,
+          barrierColor: Colors.transparent,
+          context: context,
+          builder: (context) => _buildBookLoading()));
 
   dismiss() {
     if (_showingLoading != null) Navigator.maybePop(context);
@@ -59,13 +67,24 @@ class Tip {
 
   Widget _buildLoading() {
     return _showingLoading ??= AlertTipsDialog(
-        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 15),
-        insetPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        insetPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         backgroundColor: Colors.black87,
         elevation: 8,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10))),
         content: Loading());
+  }
+
+  Widget _buildBookLoading() {
+    return _showingLoading ??= AlertTipsDialog(
+        contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        insetPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4))),
+        content: TurnBookLoading());
   }
 }
 
@@ -101,9 +120,9 @@ class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
       children: [
         Text('L', style: style),
         Container(
-            margin: EdgeInsets.only(left: 2, right: 2, top: 1),
-            width: 9,
-            height: 9,
+            margin: EdgeInsets.only(left: 2, right: 2, top: 3),
+            width: 11.5,
+            height: 11.5,
             child: CircularProgressIndicator(
               backgroundColor: mainColor,
               strokeWidth: 2,
@@ -1168,7 +1187,7 @@ Future<T> showTipDialog<T>({
     barrierDismissible: barrierDismissible,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     barrierColor: barrierColor ?? Colors.black54,
-    transitionDuration: const Duration(milliseconds: 150),
+    transitionDuration: const Duration(milliseconds: 400),
     transitionBuilder: _buildMaterialDialogTransitions,
     useRootNavigator: useRootNavigator,
     routeSettings: routeSettings,

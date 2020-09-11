@@ -18,32 +18,33 @@ class BasePage extends StatelessWidget {
         body: Stack(
       children: [
         Background(),
-        Center(child:
-        Container(
-          width: media.size.height * 8 / 10 / 0.618,
-          height: media.size.height * 8 / 10,
-          padding: EdgeInsets.all(3),
-          key: key,
-          decoration: BoxDecoration(
-              color: Colors.black54,
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black12,
-                    offset: Offset(0, 18),
-                    blurRadius: 8,
-                    spreadRadius: -10)
-              ]),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              CustomPaint(painter: MainBackground(top: 100, radius: 5)),
-              topBar(context),
+        Center(
+          child: Container(
+            width: media.size.height * 8 / 10 / 0.618,
+            height: media.size.height * 8 / 10,
+            padding: EdgeInsets.all(3),
+            key: key,
+            decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black12,
+                      offset: Offset(0, 18),
+                      blurRadius: 8,
+                      spreadRadius: -10)
+                ]),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                CustomPaint(painter: MainBackground(top: 100, radius: 5)),
+                topBar(context),
 //              WhaleLogo(key, size: Size(100.0, 0)),
-              child,
-            ],
+                child,
+              ],
+            ),
           ),
-        ),)
+        )
       ],
     ));
   }
@@ -56,17 +57,19 @@ class BasePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width / 10,
-              child: Text(
-                'Sibre.',
-                style: GoogleFonts.lato(
-                    textStyle: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: mainColor)),
-              ),
-            ),
+            Tooltip(
+                message: "Xblydxj's Blog",
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 10,
+                  child: Text(
+                    'Sibre.',
+                    style: GoogleFonts.lato(
+                        textStyle: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: mainColor)),
+                  ),
+                )),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,14 +79,14 @@ class BasePage extends StatelessWidget {
                     child: CupertinoTextField(
                         decoration: BoxDecoration(
                           color: CupertinoDynamicColor.withBrightness(
-                            color: CupertinoColors.systemGrey6,
-                            darkColor: CupertinoColors.systemGrey6,
+                            color: CupertinoColors.systemGrey5,
+                            darkColor: CupertinoColors.systemGrey5,
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                         placeholder: 'search',
-                        placeholderStyle:
-                            TextStyle(color: Colors.black45, fontSize: 15),
+                        placeholderStyle: GoogleFonts.juliusSansOne(textStyle:
+                            TextStyle(color: Colors.black45, fontSize: 15)),
                         clearButtonMode: OverlayVisibilityMode.editing,
                         readOnly: false,
                         controller: TextEditingController(),
@@ -125,4 +128,3 @@ class BasePage extends StatelessWidget {
 
 const avatar30 = 'assets/avatar/avatar_male_30.png';
 const avatar20 = 'assets/avatar/avatar_male_20.png';
-
